@@ -1,0 +1,7 @@
+127.0.0.1 - - [07/Dec/2023:12:54:47 +0900] "GET / HTTP/1.1" 404 808
+0:0:0:0:0:0:0:1 - - [07/Dec/2023:12:54:48 +0900] "GET /ServletStudy/myservlet01 HTTP/1.1" 200 -
+127.0.0.1 - - [07/Dec/2023:13:07:28 +0900] "GET / HTTP/1.1" 404 808
+0:0:0:0:0:0:0:1 - - [07/Dec/2023:13:07:28 +0900] "GET /ServletStudy/servlet/edu.pnu.servlet.MyServlet02 HTTP/1.1" 404 864
+0:0:0:0:0:0:0:1 - - [07/Dec/2023:13:07:42 +0900] "GET /ServletStudy/myservlet01 HTTP/1.1" 200 -
+127.0.0.1 - - [07/Dec/2023:13:08:08 +0900] "GET / HTTP/1.1" 404 808
+0:0:0:0:0:0:0:1 - - [07/Dec/2023:13:08:09 +0900] "GET /ServletStudy/myservlet02 HTTP/1.1" 200 79
