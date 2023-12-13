@@ -1,0 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>지폐 계산</title>
+</head>
+<body>
+<h2>지폐 계산</h2>
+<form  action="moneyMain.jsp" method="post">
+금액을 입력하세요 : <input type="number" name="n"/><br/>
+<input type="submit" value="계산"/>
+</form>
+<%
+if(request.getParameter("n_50")!=null){
+	%>
+	"money.jsp?n_50="+<%= request.getParameter("n_50")%>+"&n_10="+request.getParameter("n_50")+"&n_5"+request.getParameter("n_50")+"&n_1="+request.getParameter("n_50")
+<%
+}
+%>
+</body>
+</html>
