@@ -1,7 +1,0 @@
-package edu.pnu.servlet;
-
-import jakarta.servlet.http.HttpServlet;
-
-public class MyServlet04 extends HttpServlet {
-
-}

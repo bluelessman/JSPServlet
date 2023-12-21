@@ -3,6 +3,7 @@ package membership;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import common.JDBConnect;
+import jakarta.servlet.ServletContext;
 
 public class MemberDAO extends JDBConnect {
 //	public static void main(String[] args) {
@@ -13,9 +14,11 @@ public class MemberDAO extends JDBConnect {
 	public MemberDAO(String drv, String url, String id, String pw) {
 		super(drv, url, id, pw);
 	}
-
+	public MemberDAO(ServletContext application) {
+		super(application);
+	}
 	public MemberDTO getmeMemberDTO(String uid, String upass) {
-		MemberDTO dto = new MemberDTO();
+		MemberDTO dto = null;
 		String query = "select * from member where id=? and pass=?";
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -25,6 +28,7 @@ public class MemberDAO extends JDBConnect {
 			psmt.setString(2, upass);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
+				dto = new MemberDTO();
 				dto.setId(rs.getString("id"));
 				dto.setPass(rs.getString("Pass"));
 				dto.setName(rs.getString("Name"));

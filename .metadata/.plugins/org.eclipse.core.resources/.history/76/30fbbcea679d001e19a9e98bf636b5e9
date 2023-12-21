@@ -1,0 +1,20 @@
+package board;
+
+import java.util.Map;
+
+import common.JDBConnect;
+import jakarta.servlet.ServletContext;
+
+public class BoardDAO extends JDBConnect {
+	public BoardDAO(ServletContext application) {
+		super(application);
+	}
+	public int selectCount(Map<String, Object> map) {
+		int totalCount = 0;
+		String query = "select count(*) from board";
+		if(map.get("searchWord")!=null) {
+			query += " where " + map.get("searchField")+" "
+		+ " like '%" + map.get("searchWord") + "%'";
+		}
+	}
+}

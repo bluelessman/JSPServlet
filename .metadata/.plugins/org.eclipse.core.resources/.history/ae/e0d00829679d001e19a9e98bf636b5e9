@@ -1,0 +1,13 @@
+package board;
+
+import java.util.Map;
+
+import common.JDBConnect;
+import jakarta.servlet.ServletContext;
+
+public class BoardDAO extends JDBConnect {
+	public BoardDAO(ServletContext application) {
+		super(application);
+	}
+	public int selectCount(Map<String, Object> map)
+}

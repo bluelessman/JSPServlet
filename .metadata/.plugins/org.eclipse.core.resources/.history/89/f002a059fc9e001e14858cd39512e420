@@ -1,0 +1,7 @@
+package fileupload;
+
+import common.JDBConnect;
+
+public class MyFileDAO extends JDBConnect {
+
+}

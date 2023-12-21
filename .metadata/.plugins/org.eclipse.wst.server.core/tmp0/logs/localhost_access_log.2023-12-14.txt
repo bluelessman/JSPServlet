@@ -132,3 +132,6 @@
 0:0:0:0:0:0:0:1 - - [14/Dec/2023:17:34:02 +0900] "POST /ServletStudy/JSPMission/Session/InsertBoardForm.jsp HTTP/1.1" 200 520
 0:0:0:0:0:0:0:1 - - [14/Dec/2023:17:34:17 +0900] "POST /ServletStudy/JSPMission/Session/Logout.jsp HTTP/1.1" 302 -
 0:0:0:0:0:0:0:1 - - [14/Dec/2023:17:34:17 +0900] "GET /ServletStudy/JSPMission/Session/InsertBoardForm.jsp HTTP/1.1" 200 512
+127.0.0.1 - - [14/Dec/2023:18:00:41 +0900] "GET / HTTP/1.1" 404 808
+0:0:0:0:0:0:0:1 - - [14/Dec/2023:18:00:42 +0900] "GET /ServletStudy/JSPMission/Session/InsertBoardForm.jsp HTTP/1.1" 200 512
+0:0:0:0:0:0:0:1 - - [14/Dec/2023:18:00:42 +0900] "GET /favicon.ico HTTP/1.1" 404 819

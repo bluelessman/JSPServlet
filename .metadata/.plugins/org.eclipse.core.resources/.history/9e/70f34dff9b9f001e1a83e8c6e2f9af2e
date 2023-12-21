@@ -1,0 +1,31 @@
+package mvcboard;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Map;
+
+import common.JDBConnect;
+
+public class MVCBoardDAO extends JDBConnect {
+	public Statement stmt;
+	public PreparedStatement psmt;
+	public ResultSet rs;
+	public MVCBoardDAO() {
+		super();
+	}
+	public int selectCount(Map<String, Object> map) {
+		int totalCount = 0;
+		
+		String query = "select count(*) from mvcboard";
+		if(map.get("serachWord")!=null) {
+			query += " where "+ map.get("searchField")+" "
+					+ " like '%" + map.get("searchWord")+ "%'";
+		}
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+}
