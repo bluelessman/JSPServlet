@@ -1,7 +1,0 @@
-package misson;
-
-import jakarta.servlet.http.HttpServlet;
-
-public class TestPass extends HttpServlet {
-
-}

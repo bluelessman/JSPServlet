@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+
 import common.JDBConnect;
 
 public class MVCBoardDAO extends JDBConnect {
@@ -66,8 +67,8 @@ public class MVCBoardDAO extends JDBConnect {
 		query += " order by idx desc limit ?, ?";
 		try {
 			psmt = getCon().prepareStatement(query);
-			psmt.setInt(1,(int) map.get("start"));
-			psmt.setInt(2,(int) map.get("end"));
+			psmt.setInt(1, (int) map.get("start"));
+			psmt.setInt(2, (int) map.get("end"));
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				dto = new MVCBoardDTO();
@@ -108,14 +109,12 @@ public class MVCBoardDAO extends JDBConnect {
 		}
 		return board;
 	}
-	
+
 	public int insertWrite(MVCBoardDTO dto) {
 		PreparedStatement psmt = null;
 		int result = 0;
 		try {
-			String query = "insert into mvcboard ( "
-					+ " name, title, content, ofile, sfile, pass) "
-					+ " values ( "
+			String query = "insert into mvcboard ( " + " name, title, content, ofile, sfile, pass) " + " values ( "
 					+ " ?,?,?,?,?,?)";
 			psmt = getCon().prepareStatement(query);
 			psmt.setString(1, dto.getName());
@@ -128,6 +127,198 @@ public class MVCBoardDAO extends JDBConnect {
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("게시물 입력 중 예외 발생");
+			e.printStackTrace();
+		} finally {
+			if (psmt != null) {
+				try {
+					psmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
+
+	public MVCBoardDTO selectView(String idx) {
+		MVCBoardDTO dto = new MVCBoardDTO();
+		ResultSet rs = null;
+		PreparedStatement psmt = null;
+		String query = "select * from mvcboard where idx=?";
+		try {
+			psmt = getCon().prepareStatement(query);
+			psmt.setString(1, idx);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				dto = new MVCBoardDTO();
+				dto.setIdx(rs.getString(1));
+				dto.setName(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setContent(rs.getString(4));
+				dto.setPostdate(rs.getDate(5));
+				dto.setOfile(rs.getString(6));
+				dto.setSfile(rs.getString(7));
+				dto.setDowncount(rs.getInt(8));
+				dto.setPass(rs.getString(9));
+				dto.setVisitcount(rs.getInt(10));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("게시물 상세보기 중 예외 발생");
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (psmt != null) {
+				try {
+					psmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return dto;
+	}
+
+	public void updateVisitCount(String idx) {
+		PreparedStatement psmt = null;
+		String query = "update mvcboard set " + " visitcount = visitcount+1 " + " where idx=?";
+		try {
+			psmt = getCon().prepareStatement(query);
+			psmt.setString(1, idx);
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("게시물 조회수 증가 중 예외 발생");
+			e.printStackTrace();
+		} finally {
+			if (psmt != null) {
+				try {
+					psmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void downCountPlus(String idx) {
+		PreparedStatement psmt = null;
+		String sql = "update mvcboard set " + " downcount=downcount+1 " + " where idx = ? ";
+		try {
+			psmt = getCon().prepareStatement(sql);
+			psmt.setString(1, idx);
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("게시물 다운로드 수 증가 중 예외 발생");
+			e.printStackTrace();
+		} finally {
+			if (psmt != null) {
+				try {
+					psmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public boolean confirmPassword(String pass, String idx) {
+		ResultSet rs = null;
+		PreparedStatement psmt = null;
+		boolean isCorr = true;
+		try {
+			String sql = "select count(*) from mvcboard where pass=? and idx=?";
+				psmt = getCon().prepareStatement(sql);
+				psmt.setString(1, pass);
+				psmt.setString(2, idx);
+				rs = psmt.executeQuery();
+				rs.next();
+				if(rs.getInt(1)==0) {
+					isCorr = false;
+				}
+		} catch (Exception e) {
+			// TODO: handle exception
+			isCorr = false;
+			e.printStackTrace();
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (psmt != null) {
+				try {
+					psmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return isCorr;
+	}
+	
+	public int deletePost(String idx) {
+		PreparedStatement psmt = null;
+		int result = 0;
+		try {
+			String query = "delete from mvcboard where idx=?";
+			psmt = getCon().prepareStatement(query);
+			psmt.setString(1, idx);
+			result = psmt.executeUpdate();
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("게시물 삭제 중 예외 발생");
+			e.printStackTrace();
+		}finally {
+			if(psmt!=null) {
+				try {
+					psmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
+	
+	public int updatePost(MVCBoardDTO dto) {
+		PreparedStatement psmt = null;
+		int result = 0;
+		try {
+			String query = "update mvcboard "
+					+ " set title=?, name=?, content=?, ofile=?, sfile=? "
+					+ " where idx=? and pass=? ";
+					
+			psmt = getCon().prepareStatement(query);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getName());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getOfile());
+			psmt.setString(5, dto.getSfile());
+			psmt.setString(6, dto.getIdx());
+			psmt.setString(7, dto.getPass());
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("게시물 수정 중 예외 발생");
 			e.printStackTrace();
 		}finally {
 			if(psmt!=null) {

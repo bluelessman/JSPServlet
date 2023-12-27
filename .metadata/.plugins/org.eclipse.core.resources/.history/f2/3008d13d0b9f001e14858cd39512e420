@@ -1,7 +1,0 @@
-package fileupload;
-
-import jakarta.servlet.http.HttpServlet;
-
-public class MultipleProcess extends HttpServlet {
-
-}
