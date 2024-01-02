@@ -1,7 +1,0 @@
-package mvcboard;
-
-import common.JDBConnect;
-
-public class MVCBoardDAO extends JDBConnect {
-
-}
